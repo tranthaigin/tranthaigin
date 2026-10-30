@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/galaxy-hero-planets-v3.svg" width="100%" alt="Hello, I'm Tran Thai Gin — Trần Quốc Thái. Java Backend Developer and Software Engineering Student, exploring a moving spiral galaxy." />
+  <img src="assets/galaxy-hero-space-v4.svg" width="100%" alt="Hello, I'm Tran Thai Gin — Trần Quốc Thái. Java Backend Developer and Software Engineering Student, exploring a moving spiral galaxy." />
 </p>
 
 <p align="center"><img src="assets/divider.svg" width="100%" alt="" /></p>

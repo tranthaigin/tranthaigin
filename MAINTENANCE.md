@@ -31,3 +31,6 @@ Push the reviewed files to the profile repository's default branch, then run **R
 On failure, no commit/push is reached, preserving the previous remote assets. Only `data/contributions.json`, `assets/galaga.svg`, and `assets/gitartwork.svg` are staged by automation. No push-trigger loop, forced updates, fake commits, or GitGreen edits. A concurrent human update causes the normal push to fail safely; rerun on the latest branch.
 
 See [CREDITS.md](CREDITS.md) for exact source derivations and unresolved upstream redistribution permissions. Preserve all notices and references. `.reference/`, `.tools/`, preview files, and validation screenshots are local-only and ignored.
+
+## Ambient space effects
+The hero uses a sparse 120-second CSS timeline: three brief meteors, three small black holes lasting five seconds each (including fades), and one ship that jumps between six distant positions. Positions and timing are precomputed for SVG compatibility, not runtime randomness. Events do not overlap; reduced-motion mode hides them. The current README uses a new versioned image path to refresh GitHub caches.
