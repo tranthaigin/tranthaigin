@@ -1,0 +1,6 @@
+.reference/
+preview/
+validation/
+__pycache__/
+*.pyc
+.tools/

@@ -1,0 +1,46 @@
+name: Refresh galaxy profile
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 1 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tranthaigin-profile-visuals
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: github.repository == 'tranthaigin/tranthaigin'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+      - name: Fetch actual contribution calendar
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/calendar_source.py
+      - name: Generate adapted artwork and upstream Galaga
+        run: |
+          python3 scripts/build_profile.py
+          node scripts/render_arcade.mjs
+          python3 scripts/validate.py
+      - name: Update only generated daily files
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- data/contributions.json assets/galaga.svg assets/gitartwork.svg
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'chore: refresh contribution visuals [skip ci]'
+          git push origin "HEAD:$DEFAULT_BRANCH"
