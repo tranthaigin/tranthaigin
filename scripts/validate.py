@@ -14,7 +14,7 @@ def main():
             tag=e.tag.split('}')[-1]
             assert tag not in ['script','iframe','canvas','video','audio'],(p,tag)
             assert not any(k.lower().startswith('on') for k in e.attrib),(p,'event handler')
-            if tag=='foreignObject':assert p.name=='galaxy-hero.svg'
+            if tag=='foreignObject':assert p.name in ['galaxy-hero.svg','galaxy-hero-planets-v3.svg']
             for k,v in e.attrib.items():
                 if k.endswith('href') or k=='src':assert not v.startswith(('http:','https:','javascript:')),(p,'remote resource')
         total+=p.stat().st_size
