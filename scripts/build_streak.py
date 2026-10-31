@@ -48,18 +48,16 @@ def render(stats, created, today):
         return f'{start:%b %d, %Y} – {end:%b %d, %Y}'
     panels = ''
     for x, value, label, detail, color in [(150, f'{stats["total"]:,}', 'Total Contributions', f'{created:%b %d, %Y} – Present', '#77dbea'), (450, len(stats['current']), 'Week Streak', span(stats['current']), '#a99bff'), (750, len(stats['longest']), 'Longest Week Streak', span(stats['longest']), '#77dbea')]:
-        panels += f'<text x="{x}" y="133" class="number" fill="{color}">{value}</text><text x="{x}" y="177" class="label">{label}</text><text x="{x}" y="203" class="date">{detail}</text>'
+        panels += f'<text x="{x}" y="119" class="number" fill="{color}">{value}</text><text x="{x}" y="186" class="label">{label}</text><text x="{x}" y="211" class="date">{detail}</text>'
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="900" height="246" viewBox="0 0 900 246" role="img" aria-labelledby="title desc">
 <title id="title">Tran Thai Gin — GitHub weekly streak</title><desc id="desc">{stats['total']} total contributions, {len(stats['current'])} current active weeks, {len(stats['longest'])} longest active weeks. Updated {today}. Weeks start Sunday, UTC.</desc>
 <defs><linearGradient id="edge"><stop stop-color="#274b60"/><stop offset=".5" stop-color="#8b7bcd"/><stop offset="1" stop-color="#274b60"/></linearGradient><radialGradient id="halo"><stop stop-color="#7562bf" stop-opacity=".16"/><stop offset="1" stop-color="#7562bf" stop-opacity="0"/></radialGradient><pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#74c4de" stroke-opacity=".035"/></pattern></defs>
-<style>text{{font-family:'Segoe UI',Arial,sans-serif;text-anchor:middle}}.number{{font-size:42px;font-weight:700}}.label{{font-size:17px;fill:#dce7f5}}.date{{font-size:12px;fill:#92a5bd}}.ring{{transform-origin:450px 116px;animation:orbit 30s linear infinite}}.pulse{{animation:pulse 6s ease-in-out infinite}}@keyframes orbit{{to{{transform:rotate(360deg)}}}}@keyframes pulse{{50%{{opacity:.45}}}}@media(prefers-reduced-motion:reduce){{.ring,.pulse{{animation:none}}}}</style>
+<style>text{{font-family:Consolas,'Cascadia Code','Courier New',monospace;text-anchor:middle}}.number{{font-size:38px;font-weight:700}}.label{{font-size:15px;fill:#dce7f5}}.date{{font-size:11px;fill:#92a5bd}}.ring{{transform-origin:450px 116px;animation:orbit 30s linear infinite}}.pulse{{animation:pulse 6s ease-in-out infinite}}@keyframes orbit{{to{{transform:rotate(360deg)}}}}@keyframes pulse{{50%{{opacity:.45}}}}@media(prefers-reduced-motion:reduce){{.ring,.pulse{{animation:none}}}}</style>
 <rect x="1" y="1" width="898" height="244" rx="18" fill="#09111f" stroke="url(#edge)"/><rect x="2" y="2" width="896" height="242" rx="18" fill="url(#grid)"/>
 <path d="M20 37V20H62M838 20H880V37M20 209V226H62M838 226H880V209" fill="none" stroke="#6ccbdc" stroke-opacity=".55"/>
 <text x="450" y="31" fill="#9dacc6" font-size="10" letter-spacing="4">GITHUB STREAK</text>
 <path d="M300 66V207M600 66V207" stroke="#27354b"/>
-<circle cx="450" cy="116" r="78" fill="url(#halo)"/><circle cx="450" cy="116" r="49" fill="none" stroke="#a99bff" stroke-opacity=".15"/>
-<g class="ring"><circle cx="450" cy="116" r="56" fill="none" stroke="#a99bff" stroke-opacity=".65" stroke-dasharray="66 110"/><circle cx="450" cy="60" r="2.5" fill="#b8adff"/></g>
-<path class="pulse" d="M118 72H182M718 72H782" stroke="#77dbea" stroke-width="2" opacity=".8"/>{panels}</svg>'''
+{''.join(f'<g><circle cx="{x}" cy="105" r="54" fill="url(#halo)"/><circle cx="{x}" cy="105" r="43" fill="none" stroke="{color}" stroke-opacity=".15"/><g class="ring" style="transform-origin:{x}px 105px;animation-duration:{duration}s;animation-direction:{direction}"><circle cx="{x}" cy="105" r="49" fill="none" stroke="{color}" stroke-opacity=".6" stroke-dasharray="55 99"/><circle cx="{x}" cy="56" r="2" fill="{color}"/></g></g>' for x,color,duration,direction in [(150,'#77dbea',26,'normal'),(450,'#a99bff',30,'reverse'),(750,'#77dbea',34,'normal')])}{panels}</svg>'''
 
 def main():
     today = dt.datetime.now(dt.timezone.utc).date()
@@ -80,7 +78,7 @@ def main():
     stats = statistics(days, today)
     snapshot = {'username': 'tranthaigin', 'created': str(created), 'as_of': str(today), 'week_starts': 'Sunday UTC', 'stats': stats, 'days': days}
     (ROOT/'data/streak.json').write_text(json.dumps(snapshot, indent=2)+'\n', encoding='utf-8')
-    (ROOT/'assets/streak.svg').write_text(render(stats, created, today), encoding='utf-8')
+    (ROOT/'assets/streak-v2.svg').write_text(render(stats, created, today), encoding='utf-8')
     print(f'Streak: {stats["total"]} total, {len(stats["current"])} current weeks, {len(stats["longest"])} longest weeks')
 
 if __name__ == '__main__': main()
