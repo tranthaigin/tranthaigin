@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/galaxy-hero-space-v6.svg" width="100%" alt="Hello, I'm Tran Thai Gin — Trần Quốc Thái. Java Backend Developer and Software Engineering Student, exploring a moving spiral galaxy." />
+  <img src="assets/galaxy-hero-space-v7.svg" width="100%" alt="Hello, I'm Tran Thai Gin — Trần Quốc Thái. Java Backend Developer and Software Engineering Student, exploring a moving spiral galaxy." />
 </p>
 
 <p align="center"><img src="assets/divider.svg" width="100%" alt="" /></p>
@@ -15,7 +15,7 @@
 <p align="center"><img src="assets/divider.svg" width="100%" alt="" /></p>
 
 <p align="center">
-  <img src="assets/streak-v3.svg" width="780" alt="GitHub Streak — total contributions, current week streak and longest week streak for tranthaigin." />
+  <img src="assets/streak-v4.svg" width="780" alt="GitHub Streak — total contributions, current week streak and longest week streak for tranthaigin." />
 </p>
 
 <h2 align="center">CONNECT WITH ME</h2>

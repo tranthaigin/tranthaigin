@@ -1,4 +1,21 @@
+import math
 """Layered, self-contained planet artwork."""
+def curved_surface(label, key, light, mid, dark):
+    styles=[]; shapes=[]
+    for j,ch in enumerate(label):
+        base=(j-(len(label)-1)/2)*(0.155 if len(label)>6 else .25)
+        frames=[]
+        for k in range(81):
+            angle=base+2*math.pi*k/80
+            facing=math.cos(angle); x=85+39*math.sin(angle); y=66+8*facing
+            frames.append(f'{k*1.25:.2f}%{{transform:translate({x:.3f}px,{y:.3f}px) scale({max(.04,abs(facing)):.3f},1);opacity:{max(0,min(1,facing*5)):.3f}}}')
+        cls=f'{key}-glyph{j}'
+        styles.append('@keyframes '+cls+'{'+''.join(frames)+'}.'+cls+'{animation:'+cls+' 36s linear infinite}')
+        shapes.append(f'<g class="{cls}" font-family="Segoe UI,Arial,sans-serif" font-size="{9 if len(label)>6 else 13}" font-weight="700" text-anchor="middle"><text x=".8" y="1.2" fill="{dark}">{ch}</text><text x="0" y="0" fill="{light}">{ch}</text></g>')
+    for j in range(8):
+        shapes.append(f'<ellipse class="surface-line" cx="85" cy="70" rx="{4+j*5}" ry="43" fill="none" stroke="{light}" stroke-opacity=".08" style="animation-delay:-{j*4.5}s"/>')
+    return '<style>'+''.join(styles)+'@media(prefers-reduced-motion:reduce){'+','.join('.'+key+'-glyph'+str(j) for j in range(len(label)))+'{animation-play-state:paused}}</style><g clip-path="url(#'+key+'-sphere)">'+''.join(shapes)+'</g>'
+
 def tech_planet(label, key, tilt, colors, bands):
     light, mid, dark = colors
     rings = ''.join(f'<ellipse cx="85" cy="70" rx="{r}" ry="{r*.29}" stroke-width="{w}" opacity="{a}"/>' for r,w,a in bands)
@@ -12,8 +29,7 @@ def tech_planet(label, key, tilt, colors, bands):
 <use href="#{key}-belt" clip-path="url(#{key}-back)"/>
 <circle cx="85" cy="70" r="43" fill="url(#{key}-surface)"/>
 <g clip-path="url(#{key}-sphere)" fill="none" stroke="{light}" opacity=".07"><path d="M35 45Q85 60 135 45M35 53Q85 68 135 53M35 81Q85 96 135 81M35 88Q85 103 135 88" stroke-width="2"/></g>
-<g font-family="'Segoe UI',Arial,sans-serif" font-weight="800" font-size="{10 if key=='spring' else 15}" letter-spacing="{.6 if key=='spring' else 1.6}" text-anchor="middle" transform="translate(0 -4) skewX(-4)">
-<text x="90" y="74" fill="{dark}" stroke="{dark}" stroke-width="1.1">{label}</text><text x="89" y="72.5" fill="{mid}" stroke="{mid}" stroke-width=".5">{label}</text><text x="88.4" y="71.5" fill="url(#{key}-type)">{label}</text></g>
+{curved_surface(label,key,light,mid,dark)}
 <use href="#{key}-belt" clip-path="url(#{key}-front)"/>
 </g></svg>'''
 
@@ -36,7 +52,7 @@ def saturn():
 <use href="#sat-rings" clip-path="url(#sat-front)"/></g></svg>'''
 
 def surface_css():
-    return '''.chip::before,.chip::after{display:none}.chip .tech-world{position:absolute;width:174%;height:143%;max-width:none;left:-37%;top:-21.5%;overflow:visible}.belt-drift{animation:beltFlow 28s linear infinite}@keyframes beltFlow{to{stroke-dashoffset:-300}}.saturn-system{left:632px;top:414px;width:170px;height:130px;transform:none}
+    return '''.chip::before,.chip::after{display:none}.chip .tech-world{position:absolute;width:174%;height:143%;max-width:none;left:-37%;top:-21.5%;overflow:visible}.surface-line{transform-origin:85px 70px;animation:surfaceTurn 36s linear infinite}@keyframes surfaceTurn{0%,100%{transform:scaleX(1)}50%{transform:scaleX(-1)}}.belt-drift{animation:beltFlow 28s linear infinite}@keyframes beltFlow{to{stroke-dashoffset:-300}}.saturn-system{left:632px;top:414px;width:170px;height:130px;transform:none}
 .chip b{display:block;font:600 13px 'Segoe UI',Arial,sans-serif;letter-spacing:1px;color:#e4dfcd;opacity:.86;transform:rotate(-24deg) scaleY(.86);text-shadow:0 1px 1px #0b101a,0 -1px 1px #ffffff28;mix-blend-mode:soft-light}
 .chip:nth-child(2) b{font-size:11px;transform:rotate(18deg) scaleY(.86);color:#e0f2df}
 .chip:nth-child(3) b{transform:rotate(-35deg) scaleY(.86);color:#d8eaff}

@@ -49,7 +49,7 @@ def render(stats, created, today):
         return f'{start:%b %d, %Y} – {end:%b %d, %Y}'
     panels = ''
     for x, value, label, detail, color in [(150, f'{stats["total"]:,}', 'Total Contributions', f'{created:%b %d, %Y} – Present', '#77dbea'), (450, len(stats['current']), 'Week Streak', span(stats['current']), '#a99bff'), (750, len(stats['longest']), 'Longest Week Streak', span(stats['longest']), '#77dbea')]:
-        panels += f'<text x="{x}" y="153" class="number" fill="{color}">{value}</text><text x="{x}" y="187" class="label">{label}</text><text x="{x}" y="211" class="date">{detail}</text>'
+        panels += f'<text x="{x}" y="126" class="number" fill="{color}">{value}</text><text x="{x}" y="187" class="label">{label}</text><text x="{x}" y="211" class="date">{detail}</text>'
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="900" height="246" viewBox="0 0 900 246" role="img" aria-labelledby="title desc">
 <title id="title">Tran Thai Gin — GitHub weekly streak</title><desc id="desc">{stats['total']} total contributions, {len(stats['current'])} current active weeks, {len(stats['longest'])} longest active weeks. Updated {today}. Weeks start Sunday, UTC.</desc>
 <defs><linearGradient id="edge"><stop stop-color="#274b60"/><stop offset=".5" stop-color="#8b7bcd"/><stop offset="1" stop-color="#274b60"/></linearGradient><radialGradient id="halo"><stop stop-color="#7562bf" stop-opacity=".16"/><stop offset="1" stop-color="#7562bf" stop-opacity="0"/></radialGradient><pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#74c4de" stroke-opacity=".035"/></pattern></defs>
@@ -79,7 +79,7 @@ def main():
     stats = statistics(days, today)
     snapshot = {'username': 'tranthaigin', 'created': str(created), 'as_of': str(today), 'week_starts': 'Sunday UTC', 'stats': stats, 'days': days}
     (ROOT/'data/streak.json').write_text(json.dumps(snapshot, indent=2)+'\n', encoding='utf-8')
-    (ROOT/'assets/streak-v3.svg').write_text(render(stats, created, today), encoding='utf-8')
+    (ROOT/'assets/streak-v4.svg').write_text(render(stats, created, today), encoding='utf-8')
     print(f'Streak: {stats["total"]} total, {len(stats["current"])} current weeks, {len(stats["longest"])} longest weeks')
 
 if __name__ == '__main__': main()
