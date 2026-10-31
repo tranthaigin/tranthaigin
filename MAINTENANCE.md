@@ -37,4 +37,3 @@ The hero uses a sparse 120-second CSS timeline: three brief meteors, three small
 # Weekly streak panel
 
 `python scripts/build_streak.py` fetches contribution history from the account creation date using GitHub GraphQL and generates `data/streak.json` and `assets/streak.svg`. The daily workflow updates both. Total Contributions counts the full returned history, not only the rolling year used by the arcade. Weeks run Sunday–Saturday in UTC; one or more contributions makes a week active. An unfinished empty current week preserves the previous week's streak until that week finishes. Dates beneath streaks show week boundaries, capped at the snapshot date. Equal longest runs retain the earliest run. `python scripts/test_streak.py` checks boundaries, gaps, and empty history.
-
