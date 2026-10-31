@@ -14,6 +14,10 @@
 
 <p align="center"><img src="assets/divider.svg" width="100%" alt="" /></p>
 
+<p align="center">
+  <img src="assets/streak.svg" width="780" alt="GitHub Streak — total contributions, current week streak and longest week streak for tranthaigin." />
+</p>
+
 <h2 align="center">CONNECT WITH ME</h2>
 
 <p align="center">
