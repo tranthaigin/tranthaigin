@@ -2,7 +2,7 @@ from ship_model import spacecraft
 """Sparse, deterministic pseudo-random scene events; no JavaScript inside SVG."""
 import random
 
-def ambient_events():
+def ambient_events(include_cinematics=False):
     rng=random.Random(26062005)
     duration=120
     def pct(t):return f'{t/duration*100:.5f}%'
@@ -12,6 +12,8 @@ def ambient_events():
         x+=rng.randint(-25,25)
         css.append(f'@keyframes meteor{i}{{0%,{pct(start)}{{opacity:0;transform:translate(0,0) rotate(24deg)}}{pct(start+.25)}{{opacity:.6}}{pct(start+1.2)}{{opacity:0;transform:translate(230px,100px) rotate(24deg)}}100%{{opacity:0;transform:translate(230px,100px) rotate(24deg)}}}}.meteor.m{i}{{left:{x}px;top:{y}px;animation:meteor{i} 120s linear infinite}}')
         markup.append(f'<div class="meteor m{i}"></div>')
-    from cinematic_events import cinematic
-    extra_css, extra_markup = cinematic()
-    return ''.join(css)+extra_css, ''.join(markup)+extra_markup
+    if include_cinematics:
+        from cinematic_events import cinematic
+        extra_css, extra_markup = cinematic()
+        return ''.join(css)+extra_css, ''.join(markup)+extra_markup
+    return ''.join(css), ''.join(markup)

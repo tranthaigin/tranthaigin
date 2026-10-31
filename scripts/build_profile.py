@@ -74,7 +74,7 @@ def socials():
 
 def main():
     data=json.loads((ROOT/'data/contributions.json').read_text(encoding='utf-8'))
-    write('galaxy-hero.svg',hero());write('galaxy-hero-space-v8.svg',hero());write('gitartwork.svg',lettering(data));socials()
+    write('galaxy-hero.svg',hero());write('galaxy-hero-space-v9.svg',hero());write('gitartwork.svg',lettering(data));socials()
     write('divider.svg','<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="20" viewBox="0 0 1200 20"><defs><linearGradient id="g"><stop stop-color="#112339"/><stop offset=".4" stop-color="#7ad9eb"/><stop offset=".7" stop-color="#a18ae5"/><stop offset="1" stop-color="#112339"/></linearGradient></defs><path d="M120 10H1080" stroke="url(#g)" stroke-width="2"/></svg>')
     print('Built adapted galaxy, contribution lettering, five contact cards and separator')
 if __name__=='__main__':main()
